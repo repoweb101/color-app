@@ -1,0 +1,30 @@
+<svg id="svg_container" xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200" fill="none" x-html="svg.element">  <defs>
+    <linearGradient id="gradientMono" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4A4A4A"/>
+      <stop offset="100%" stop-color="#1A1A1A"/>
+    </linearGradient>
+    <!-- New gradients for the concentric triad to give them depth -->
+    <linearGradient id="triadGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#B0B0B0"/>
+      <stop offset="100%" stop-color="#7A7A7A"/>
+    </linearGradient>
+    <linearGradient id="triadGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E0E0E0"/>
+      <stop offset="100%" stop-color="#B0B0B0"/>
+    </linearGradient>
+    <linearGradient id="triadGradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#E0E0E0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Outer Circle Background -->
+  <circle cx="100" cy="100" r="90" fill="url(#gradientMono)"/>
+
+  <!-- Concentric Triad in the center -->
+  <!-- Outermost circle of the triad -->
+  <circle cx="100" cy="100" r="60" fill="url(#triadGradient1)" stroke="#5A5A5A" stroke-width="2"/>
+  <!-- Middle circle of the triad -->
+  <circle cx="100" cy="100" r="40" fill="url(#triadGradient2)" stroke="#8A8A8A" stroke-width="2"/>
+  <!-- Innermost circle of the triad -->
+  <circle cx="100" cy="100" r="20" fill="url(#triadGradient3)" stroke="#C0C0C0" stroke-width="2"/></svg>
