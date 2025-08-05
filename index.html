@@ -1,0 +1,541 @@
+<!doctype html>
+
+<html lang="en">
+
+    <head>
+
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/assets/logo-Cm8MPt7-.svg">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Monocolor: color contrast checker</title>
+
+      <script type="module" crossorigin src="/assets/main-CSYLm5li.js"></script>
+      <link rel="stylesheet" crossorigin href="/assets/main-DeMQ_6I9.css">
+    </head>
+
+    <body
+        x-data="color_manipulation"
+    >
+
+        <header class="box-border w-full">
+
+            <nav class="w-full text-slate-50 bg-linear-to-b from-slate-950 to-slate-900"
+                x-data="navbar_data"
+            >
+
+                <div class="w-full h-full flex flex-row flex-wrap items-center justify-between">
+
+                    <a href="/" class="flex flex-row items-center px-2 py-4 space-x-2 rtl:space-x-reverse hover:bg-slate-400/50">
+
+                        <img src="../assets/logo.svg" class="h-8" alt="Monocolor Logo" />
+
+                        <span class="self-center text-2xl font-semibold">Monocolor App</span>
+
+                    </a>
+
+                    <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 mx-4 w-10 h-10 justify-center text-base rounded-lg shadow-sm shadow-slate-500/40
+                        md:hidden hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-200" aria-controls="navbar-default" aria-expanded="false"
+                    >
+
+                        <span class="text-2xl font-bold">&#9776;</span>
+                        
+                    </button>
+
+                    <ul class="hidden md:flex md:flex-row md:justify-end font-medium border border-slate-100 rounded-lg md:border-none md:space-x-4 md:mx-4">
+
+                        <template  x-for="element in elements">
+
+                            <li class="md:flex md:justify-center md:items-center min-w-[150px] hover:bg-slate-500">
+
+                                <a class="p-2 text-slate-50" aria-current="page"
+                                    x-bind:href="element.url"
+                                    x-bind:aria-current="element.selected === true ? 'page' : ''"
+                                    x-on:click="selectNavbarElement(index)"
+                                    x-text="element.label"
+                                ></a>
+
+                            </li>
+
+                        </template>
+
+                    </ul>
+
+                </div>
+
+            </nav>
+
+        </header>
+
+        <main
+            x-data="scrolling_data"
+        >
+
+            <section id="hero" class="hero-container">
+
+                <div class="hero-text-container">
+
+                    <h1 class="hero-text-title">Ensure Perfect Contrast, Enhance Accessibility, all with <span class="hero-text-title-focused">Monocolor App</span></h1>
+
+                    <p class="hero-text-content">
+                        Easily test and optimize color combinations for your designs to ensure text is readable by everyone, even with visual impairments. Make your digital
+                        content stand out with confident, compliant color contrast.
+                    </p>
+
+                    <a class="hero-text-cta" href="/#colorcontrast">¡Try Our Free Color Contrast Checker!</a>
+
+                </div>
+
+                <div class="hero-image-container">
+
+                    <svg class="hero-svg-image" viewBox="0 0 400 250" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+
+                        <rect width="400" height="250" rx="20" ry="20" fill="#F0F0F0"/>
+
+                        <rect x="50" y="50" width="130" height="150" rx="15" ry="15" fill="#333333"/>
+
+                        <text x="115" y="135" font-family="Inter, sans-serif" font-size="60" font-weight="bold" fill="#FFFFFF" text-anchor="middle" alignment-baseline="middle">Aa</text>
+
+                        <rect x="220" y="50" width="130" height="150" rx="15" ry="15" fill="#EEEEEE"/>
+
+                        <text x="285" y="135" font-family="Inter, sans-serif" font-size="60" font-weight="bold" fill="#333333" text-anchor="middle" alignment-baseline="middle">Aa</text>
+
+                        <g transform="translate(195, 125)">
+
+                            <circle cx="0" cy="0" r="30" fill="#888888"/>
+
+                            <path d="M-10 -5 L0 5 L15 -10" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                        </g>
+
+                        <text x="200" y="225" font-family="Inter, sans-serif" font-size="20" fill="#555555" text-anchor="middle">Contrast</text>
+
+                    </svg>
+
+                </div>
+
+            </section>
+
+            <h2 id="colorcontrast" class="color-app-title">Color Contrast checker &#9681;</h2>
+
+            <section class="color-app-container">
+
+                <section class="color-picker-container">
+
+                    <div class="color-menu-container">
+
+                        <div class="color-main-color-container">
+
+                            <p class="color-main-color-label">Main Color:</p>
+
+                            <button class="color-picker-card"
+                                x-on:click="openColorDropdown(0)"
+                            >
+
+                                <div class="color-picker-card-color-box"
+                                    x-bind:style="{background: hsl_color[0].selected_color['hex'] }"
+                                ></div>
+
+                                <div class="box-border w-full">
+
+                                    <p class="color-main-color-hexcode" x-text="hsl_color[0].selected_color['hex'] ? hsl_color[0].selected_color['hex'] : ''"></p>
+
+                                </div>
+                                            
+                                <dialog id="dialog-0" class="color-main-color-dialog"
+                                    x-bind:open="open_dropdown[0] === '1'" 
+                                    x-on:mouseleave="open_dropdown[0] = '0'"
+                                    x-on:click="event.stopPropagation()"
+                                    x-transition:enter="transition ease-out duration-100"
+                                    x-transition:enter-start="opacity-0 scale-90"
+                                    x-transition:enter-end="opacity-100 scale-100"
+                                    x-transition:leave="transition ease-in duration-100"
+                                    x-transition:leave-start="opacity-100 scale-100"
+                                    x-transition:leave-end="opacity-0 scale-90" 
+                                >
+
+                                    <div class="color-modification-container">
+
+                                        <label for="default-range-hue-0" class="color-modification-input-label"
+                                            x-text="'Hue: ' + Math.round(hsl_color[0].selected_color['hsl_arr'][0]) + ' deg'"
+                                        ></label>
+
+                                        <input type="range" id="default-range-hue-0" class="color-modification-input-range" min="0" max="360"
+                                            step="1"
+                                            x-bind:value="hsl_color[0].selected_color['hsl_arr'][0]"
+                                            x-on:input="getHslColor(hsl_color[0], 0, event.target.value)"
+                                        >
+
+                                        <label for="default-range-sat-0" class="color-modification-input-label"
+                                            x-text="'Saturation: ' + Math.round(100 * hsl_color[0].selected_color['hsl_arr'][1]) + '%'"
+                                        ></label>
+
+                                        <input type="range" id="default-range-sat-0" class="color-modification-input-range" min="0" max="1"
+                                            step="0.01"
+                                            x-bind:value="hsl_color[0].selected_color['hsl_arr'][1]"
+                                            x-on:input="getHslColor(hsl_color[0], 1, event.target.value)"
+                                        >
+
+                                        <label for="default-range-lig-0" class="color-modification-input-label"
+                                            x-text="'Lightness: ' + Math.round(100 * hsl_color[0].selected_color['hsl_arr'][2]) + '%'"
+                                        ></label>
+
+                                        <input type="range" id="default-range-lig-0" class="color-modification-input-range" min="0" max="1"
+                                            step="0.01"
+                                            x-bind:value="hsl_color[0].selected_color['hsl_arr'][2]"
+                                            x-on:input="getHslColor(hsl_color[0], 2, event.target.value)"
+                                        >
+
+                                        <label for="default-text-0" class="color-modification-input-label">Or insert your color:</label>
+
+                                        <input type="text" id="default-text-0" class="color-modification-input-text"
+                                            x-bind:value="hsl_color[0].selected_color['hex']"
+                                            x-on:input="hsl_color[0].setHexadecimalValue(event.target.value)"
+                                        >
+
+                                    </div>
+
+                                </dialog>
+
+                            </button>
+
+                        </div>
+
+                        <button class="add-color-button"
+                            x-on:click="addNewColor()"
+                        >Add color</button>
+
+                        <div class="test-color-box">
+
+                            <p class="text-color-box-label"
+                                x-text="'Test Colors: ' + (hsl_color.length - 1)"
+                            >Test Colors:</p>
+
+                            <div id="test-colors-container"
+                                class="text-color-container"
+                                x-init="mouse_scroll.defineCarouselElement('test-colors-container');
+                                        touch_scroll.defineCarouselElement('test-colors-container');"
+                                x-on:mousedown="mouse_scroll.beginningMouseMovementOnMousedown('test-colors-container', event)"
+                                x-on:mousemove="mouse_scroll.performMouseMovementOnMousemove('test-colors-container', event)"
+                                x-on:mouseup="mouse_scroll.endingMouseMovementOnMouseup('test-colors-container')"
+                                x-on:mouseleave="mouse_scroll.endingScrollMovementOnMouseleave('test-colors-container')"
+                                x-on:touchstart="touch_scroll.beginningTouchMovement('test-colors-container', event)"
+                                x-on:touchmove="touch_scroll.performTouchMovement('test-colors-container', event)"
+                                x-on:touchend="touch_scroll.endingTouchMovement('test-colors-container')"
+                            >
+
+                                <template x-for="(color, index) in hsl_color">
+
+                                    <template x-if="index > 0">
+
+                                        <button 
+                                            x-bind:class="index === selected_color_index ? 'color-picker-card-selected' : 'color-picker-card'"
+                                            x-on:click="setSelectedColor(index)"
+                                        >
+
+                                            <div class="color-picker-card-color-box"
+                                                x-bind:style="{background: color.selected_color['hex'] }"
+                                            ></div>
+
+                                            <p class="color-main-color-hexcode" x-text="color.selected_color['hex'] ? color.selected_color['hex'] : ''"></p>
+
+                                        </button>
+
+                                    </template>
+
+                                </template>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <section class="color-contrast-container">
+
+                    <template x-if="selected_color_index > 0 && selected_color_index < hsl_color.length">
+
+                        <div class="color-contrast-box">
+
+                            <div class="color-contrast-button-container">
+
+                                <button class="modify-test-color-button"
+                                    x-on:click="openColorDropdown(selected_color_index)"
+                                >
+
+                                    <p>Modify test color:</p>
+                                                
+                                    <dialog class="color-contrast-modify-text-color-dialog"
+                                        x-bind:id="'dialog-' + selected_color_index"
+                                        x-bind:open="open_dropdown[selected_color_index] === '1'" 
+                                        x-on:mouseleave="open_dropdown[selected_color_index] = '0'"
+                                        x-on:click="event.stopPropagation()"
+                                        x-transition:enter="transition ease-out duration-100"
+                                        x-transition:enter-start="opacity-0 scale-90"
+                                        x-transition:enter-end="opacity-100 scale-100"
+                                        x-transition:leave="transition ease-in duration-100"
+                                        x-transition:leave-start="opacity-100 scale-100"
+                                        x-transition:leave-end="opacity-0 scale-90" 
+                                    >
+
+                                        <div class="color-modification-container">
+
+                                            <label class="color-modification-input-label"
+                                                x-bind:for="'test-range-hue' + selected_color_index"
+                                                x-text="'Hue: ' + Math.round(hsl_color[selected_color_index].selected_color['hsl_arr'][0]) + ' deg'"
+                                            ></label>
+
+                                            <input type="range" class="color-modification-input-range" min="0" max="360" step="1"
+                                                x-bind:id="'test-range-hue' + selected_color_index"
+                                                x-bind:value="hsl_color[selected_color_index].selected_color['hsl_arr'][0]"
+                                                x-on:input="getHslColor(hsl_color[selected_color_index], 0, event.target.value)"
+                                            >
+
+                                            <label class="color-modification-input-label"
+                                                x-bind:for="'test-range-sat' + selected_color_index"
+                                                x-text="'Saturation: ' + Math.round(100 * hsl_color[selected_color_index].selected_color['hsl_arr'][1]) + '%'"
+                                            ></label>
+
+                                            <input type="range" class="color-modification-input-range" min="0" max="1" step="0.01"
+                                                x-bind:id="'test-range-sat' + selected_color_index"
+                                                x-bind:value="hsl_color[selected_color_index].selected_color['hsl_arr'][1]"
+                                                x-on:input="getHslColor(hsl_color[selected_color_index], 1, event.target.value)"
+                                            >
+
+                                            <label class="color-modification-input-label"
+                                                x-bind:for="'test-range-lig' + selected_color_index"
+                                                x-text="'Lightness: ' + Math.round(100 * hsl_color[selected_color_index].selected_color['hsl_arr'][2]) + '%'"
+                                            ></label>
+
+                                            <input type="range" class="color-modification-input-range" min="0" max="1" step="0.01"
+                                                x-bind:id="'test-range-lig' + selected_color_index"
+                                                x-bind:value="hsl_color[selected_color_index].selected_color['hsl_arr'][2]"
+                                                x-on:input="getHslColor(hsl_color[selected_color_index], 2, event.target.value)"
+                                            >
+
+                                            <label class="color-modification-input-label"
+                                                x-bind:for="'test-text' + selected_color_index"
+                                            >Or insert your color:</label>
+
+                                            <input type="text" class="color-modification-input-text"
+                                                x-bind:id="'test-text' + selected_color_index"
+                                                x-bind:value="hsl_color[selected_color_index].selected_color['hex']"
+                                                x-on:input="hsl_color[selected_color_index].setHexadecimalValue(event.target.value)"
+                                            >
+
+                                        </div>
+
+                                    </dialog>
+
+                                </button>
+
+                                <button class="delete-test-color-button"
+                                    x-on:click="deleteColor()"
+                                >Delete color</button>
+
+                            </div>
+
+                            <div class="color-contrast-dashboard-container">
+
+                                <div class="color-contrast-guides
+                                    shadow-slate-300"
+                                >
+
+                                    <div class="box-border w-full p-4 rounded-t-lg"
+                                        x-bind:style="{color: hsl_color[selected_color_index].selected_color.hex, background: hsl_color[0].selected_color.hex}"
+                                    >
+
+                                        <p class="box-border w-full rounded-t-lg">
+                                            <span class="text-[16pt]">Text normal &lt; 18pt</span>
+                                        </p>
+
+                                        <p class="box-border w-full rounded-t-lg">
+                                            <span class="text-[12pt] font-bold"> Text bold &lt; 14pt</span>
+                                        </p>
+
+                                    </div>
+
+                                    <p class="box-border w-full p-4 text-base text-slate-950">
+                                        Contrast: <span
+                                            x-text="hsl_color[0].calculateRGBContrastRatio(hsl_color[selected_color_index].selected_color.rgb_luminance)"
+                                        ></span>                  <span class="text-base font-bold"
+                                            x-text="hsl_color[0].calculateRGBContrastRatio(hsl_color[selected_color_index].selected_color.rgb_luminance) > 7 ? '    &#10004;' : '    &#10008;'"
+                                        ></span>
+                                    </p>
+
+                                </div>
+
+                                <div class="color-contrast-guides
+                                    shadow-slate-300"
+                                >
+
+                                    <div class="box-border w-full p-4 rounded-t-lg"
+                                        x-bind:style="{color: hsl_color[selected_color_index].selected_color.hex, background: hsl_color[0].selected_color.hex}"
+                                    >
+
+                                        <p class="box-border w-full">
+                                            <span class="text-[20pt]">Text normal &ge; 18pt</span>
+                                        </p>
+
+                                        <p class="box-border w-full">
+                                            <span class="text-[16pt] font-bold"> Text bold &ge; 14pt</span>
+                                        </p>
+
+                                    </div>
+
+                                    <p class="box-border w-full p-4 text-base text-slate-950">
+                                        Contrast: <span
+                                            x-text="hsl_color[0].calculateRGBContrastRatio(hsl_color[selected_color_index].selected_color.rgb_luminance)"
+                                        ></span>                  <span class="text-base font-bold"
+                                            x-text="hsl_color[0].calculateRGBContrastRatio(hsl_color[selected_color_index].selected_color.rgb_luminance) > 4.5 ? '    &#10004;' : '    &#10008;'"
+                                        ></span>
+                                    </p>
+
+                                </div>
+
+                                <div class="color-contrast-guides
+                                    shadow-slate-300">
+
+                                    <p class="box-border w-full p-4 text-[20pt] rounded-t-lg"
+                                        x-bind:style="{color: hsl_color[selected_color_index].selected_color.hex, background: hsl_color[0].selected_color.hex}"
+                                    >
+                                        Icons: &#9842; &#9784; &#9762; &#9742;
+                                    </p>
+
+                                    <p class="box-border w-full p-4 text-base text-slate-950">
+                                        Contrast: <span
+                                            x-text="hsl_color[0].calculateRGBContrastRatio(hsl_color[selected_color_index].selected_color.rgb_luminance)"
+                                        ></span>                  <span class="text-base font-bold"
+                                            x-text="hsl_color[0].calculateRGBContrastRatio(hsl_color[selected_color_index].selected_color.rgb_luminance) > 3 ? '    &#10004;' : '    &#10008;'"
+                                        ></span>
+                                    </p>
+
+                                </div>
+
+                                <h2 class="color-contrast-title-guide"
+                                    x-bind:style="{color: hsl_color[selected_color_index].selected_color.hex, background: hsl_color[0].selected_color.hex}"
+                                >
+                                    This is a little example of a heading text (30px)
+                                </h2>
+
+                                <h3 class="color-contrast-subheading-guide"
+                                    x-bind:style="{color: hsl_color[selected_color_index].selected_color.hex, background: hsl_color[0].selected_color.hex}"
+                                >
+                                    This is an example subheading text to test contrast with background (20px)
+                                </h3>
+
+                                <div class="color-contrast-content-guide"
+                                    x-bind:style="{background: hsl_color[0].selected_color.hex}"
+                                >
+
+                                    <p class="box-border w-full p-4 text-[16px]"
+                                        x-bind:style="{color: hsl_color[selected_color_index].selected_color.hex}"
+                                    >
+                                        This is a sample content text to test color contrast with background. (16px).
+                                    </p>
+
+                                    <p class="box-border w-full p-4 text-[14px]"
+                                        x-bind:style="{color: hsl_color[selected_color_index].selected_color.hex}"
+                                    >
+                                        And this is a sample small text to check the color contrast. (14px).
+                                    </p>
+
+                                </div>
+
+                                <div class="color-contrast-luminisity-modificator">
+
+                                    <div class="box-border relative flex flex-row justify-between items-center gap-2 px-2 py-2 w-full">
+
+                                        <p class="p-4 text-lg font-bold text-slate-950">Background: </p>
+
+                                        <div class="box-border relative flex flex-row justify-between items-center gap-2 px-2 py-2 w-[130px]">
+
+                                            <div class="color-picker-card-color-box"
+                                                x-bind:style="{background: hsl_color[0].selected_color['hex'] }"
+                                            ></div>
+
+                                            <div class="box-border w-full">
+
+                                                <p class="box-border shrink text-base font-medium text-slate-950"
+                                                    x-text="hsl_color[0].selected_color['hex'] ? hsl_color[0].selected_color['hex'] : ''"
+                                                ></p>
+
+                                            </div>
+                                        
+                                        </div>
+
+                                    </div>
+
+                                    <div class="box-border flex flex-row justify-between items-center gap-2 px-4 w-full">
+
+                                        <label class="box-border text-lg font-bold text-slate-950"
+                                            x-bind:for="'test-range-lig-modif-' + 0"
+                                        >&#9728;</label>
+
+                                        <input type="range" class="color-contrast-luminosity-range" min="0" max="1" step="0.01"
+                                            x-bind:id="'test-range-lig-modif-' + 0"
+                                            x-bind:value="hsl_color[0].selected_color['hsl_arr'][2]"
+                                            x-on:input="getHslColor(hsl_color[0], 2, event.target.value)"
+                                        >
+
+                                    </div>
+
+                                    <button class="my-4 py-2 self-stretch text-2xl font-black text-amber-600"
+                                        x-on:click="invertColors()"
+                                    ><span class="text-lg text-slate-950 font-bold">Invert </span> &#8921; &#8693; &#8920; <span class="text-lg text-slate-950 font-bold"> Colors</span></button>
+
+                                    <div class="box-border relative flex flex-row justify-between items-center gap-2 px-2 py-2 w-full">
+
+                                        <p class="p-4 text-lg font-bold text-slate-950">Text content: </p>
+
+                                        <div class="box-border relative flex flex-row justify-between items-center gap-2 px-2 py-2 w-[130px]">
+
+                                            <div class="color-picker-card-color-box"
+                                                x-bind:style="{background: hsl_color[selected_color_index].selected_color['hex'] }"
+                                            ></div>
+
+                                            <div class="box-border w-full">
+
+                                                <p class="box-border shrink text-base font-medium text-slate-950"
+                                                    x-text="hsl_color[selected_color_index].selected_color['hex'] ? hsl_color[selected_color_index].selected_color['hex'] : ''"
+                                                ></p>
+
+                                            </div>
+                                        
+                                        </div>
+
+                                    </div>
+
+                                    <div class="box-border flex flex-row justify-between items-center gap-2 px-4 w-full">
+
+                                        <label class="box-border text-lg font-bold text-slate-950"
+                                            x-bind:for="'test-range-lig-modif-' + selected_color_index"
+                                        >&#9728;</label>
+
+                                        <input type="range" class="color-contrast-luminosity-range" min="0" max="1" step="0.01"
+                                            x-bind:id="'test-range-lig-modif-' + selected_color_index"
+                                            x-bind:value="hsl_color[selected_color_index].selected_color['hsl_arr'][2]"
+                                            x-on:input="getHslColor(hsl_color[selected_color_index], 2, event.target.value)"
+                                        >
+
+                                    </div>
+                            
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </template>
+
+                </section>
+        
+            </section>
+
+        </main>
+
+        <footer class="h-[60px] bg-slate-400/70"></footer>
+
+    </body>
+
+</html>
